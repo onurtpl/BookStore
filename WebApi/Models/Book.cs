@@ -1,8 +1,8 @@
 using System;
 
-namespace WebApi.Models 
+namespace WebApi.Models
 {
-    public class Book 
+    public class Book
     {
         public int Id { get; set; }
 

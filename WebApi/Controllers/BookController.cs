@@ -4,40 +4,40 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Models;
 
-namespace WebApi.Controllers 
+namespace WebApi.Controllers
 {
     [ApiController]
     [Route("[controller]s")]
-    public class BookController : ControllerBase 
+    public class BookController : ControllerBase
     {
-        private static List<Book> BookList = new List<Book>() 
+        private static List<Book> BookList = new List<Book>()
         {
-           new Book 
-           {
-                Id = 1,
-                Title = "Lean Startup",
-                GenreId = 1,  // Personal Growth
-                PageCount = 200,
-                PublishDate = new DateTime(2001, 01, 21)
-           },  
-           new Book 
-           {
-                Id = 2,
-                Title = "HerLand",
-                GenreId = 2,  // Science Finction
-                PageCount = 250,
-                PublishDate = new DateTime(2010, 05, 23)
-           },
-           new Book 
-           {
-                Id = 3,
-                Title = "Dune",
-                GenreId = 2,  // Science Finction
-                PageCount = 540,
-                PublishDate = new DateTime(2008, 05, 07)
-           }
+            new Book
+            {
+                    Id = 1,
+                    Title = "Lean Startup",
+                    GenreId = 1,  // Personal Growth
+                    PageCount = 200,
+                    PublishDate = new DateTime(2001, 01, 21)
+            },
+            new Book
+            {
+                    Id = 2,
+                    Title = "HerLand",
+                    GenreId = 2,  // Science Finction
+                    PageCount = 250,
+                    PublishDate = new DateTime(2010, 05, 23)
+            },
+            new Book
+            {
+                    Id = 3,
+                    Title = "Dune",
+                    GenreId = 2,  // Science Finction
+                    PageCount = 540,
+                    PublishDate = new DateTime(2008, 05, 07)
+            }
         };
-    
+
         [HttpGet]
         public List<Book> GetBooks()
         {
@@ -75,7 +75,6 @@ namespace WebApi.Controllers
             var book = BookList.SingleOrDefault(x => x.Id == id);
             if(book is  null)
                 return BadRequest();
-            
             book.GenreId = updatedBook.GenreId != default ? updatedBook.GenreId : book.GenreId;
             book.Title = updatedBook.Title != default ? updatedBook.Title : book.Title;
             book.GenreId = updatedBook.GenreId != default ? updatedBook.GenreId : book.GenreId;
@@ -91,10 +90,9 @@ namespace WebApi.Controllers
             var book = BookList.SingleOrDefault(x => x.Id == id);
             if(book is null)
                 return BadRequest();
-            
             BookList.Remove(book);
             return Ok();
         }
-    
     }
+
 }
