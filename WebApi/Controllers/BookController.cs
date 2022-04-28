@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using WebApi.BookOperations.CreateBook;
 using WebApi.BookOperations.GetBookById;
 using WebApi.BookOperations.GetBooks;
+using WebApi.BookOperations.UpdateBook;
 using WebApi.DbOperationOptions;
 using WebApi.Models;
 
@@ -58,12 +59,6 @@ namespace WebApi.Controllers
         [HttpPost]
         public IActionResult AddBook([FromBody] CreateBookModel newBook)
         {
-            // var book = _context.Books.SingleOrDefault(x => x.Title == newBook.Title);
-            // if(book is not null)
-            //     return BadRequest();
-            // _context.Books.Add(newBook);
-            // _context.SaveChanges();
-            // return Ok();
             CreateBookCommand command = new CreateBookCommand(_context);
             command.Model = newBook;
             try 
@@ -74,25 +69,24 @@ namespace WebApi.Controllers
             {
                 return BadRequest(ex.Message);
             }
-            
-            
-
             return Ok();
         }
 
         [HttpPut("{id}")]
-        public IActionResult UpdateBook(int id, [FromBody] Book updatedBook)
+        public IActionResult UpdateBook(int id, [FromBody] UpdateBookModel updatedBook)
         {
-            var book = _context.Books.SingleOrDefault(x => x.Id == id);
-            if(book is  null)
-                return BadRequest();
-            book.GenreId = updatedBook.GenreId != default ? updatedBook.GenreId : book.GenreId;
-            book.Title = updatedBook.Title != default ? updatedBook.Title : book.Title;
-            book.GenreId = updatedBook.GenreId != default ? updatedBook.GenreId : book.GenreId;
-            book.PageCount = updatedBook.PageCount != default ? updatedBook.PageCount : book.PageCount;
-            book.PublishDate = updatedBook.PublishDate != default ? updatedBook.PublishDate : book.PublishDate;
-            _context.SaveChanges();
-            return Ok();
+            var command = new UpdateBookCommand(_context);
+            try
+            {
+                command.Model = updatedBook;
+                command.Id = id;
+                command.Handle();
+                return Ok();
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpDelete("{id}")]
