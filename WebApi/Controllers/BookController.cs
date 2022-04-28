@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.BookOperations.CreateBook;
 using WebApi.BookOperations.DeleteBook;
@@ -17,16 +18,20 @@ namespace WebApi.Controllers
     public class BookController : ControllerBase
     {
         private readonly BookStoreDbContext _context;
+        private readonly IMapper _mapper;
 
-        public BookController(BookStoreDbContext context)
+        public BookController(
+            BookStoreDbContext context,
+            IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         [HttpGet]
         public IActionResult GetBooks()
         {
-            GetBooksQuery query = new GetBooksQuery(_context);
+            GetBooksQuery query = new GetBooksQuery(_context, _mapper);
             var result = query.Handle();
             return Ok(result);
         }
@@ -36,7 +41,7 @@ namespace WebApi.Controllers
         {
             // var book = _context.Books.FirstOrDefault(x => x.Id == id);
             // return book;
-            GetBookByIdQuery query = new GetBookByIdQuery(_context);
+            GetBookByIdQuery query = new GetBookByIdQuery(_context, _mapper);
             query.Id = id;
             try
             {
@@ -60,7 +65,7 @@ namespace WebApi.Controllers
         [HttpPost]
         public IActionResult AddBook([FromBody] CreateBookModel newBook)
         {
-            CreateBookCommand command = new CreateBookCommand(_context);
+            CreateBookCommand command = new CreateBookCommand(_context, _mapper);
             command.Model = newBook;
             try 
             {
@@ -76,7 +81,7 @@ namespace WebApi.Controllers
         [HttpPut("{id}")]
         public IActionResult UpdateBook(int id, [FromBody] UpdateBookModel updatedBook)
         {
-            var command = new UpdateBookCommand(_context);
+            var command = new UpdateBookCommand(_context, _mapper);
             try
             {
                 command.Model = updatedBook;
