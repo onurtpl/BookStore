@@ -9,7 +9,9 @@ using WebApi.BookOperations.GetBookById;
 using WebApi.BookOperations.GetBooks;
 using WebApi.BookOperations.UpdateBook;
 using WebApi.DbOperationOptions;
+using FluentValidation.Results;
 using WebApi.Models;
+using FluentValidation;
 
 namespace WebApi.Controllers
 {
@@ -66,9 +68,22 @@ namespace WebApi.Controllers
         public IActionResult AddBook([FromBody] CreateBookModel newBook)
         {
             CreateBookCommand command = new CreateBookCommand(_context, _mapper);
-            command.Model = newBook;
+            
             try 
             {
+                command.Model = newBook;
+
+                CreateBookCommandValidator validator = new CreateBookCommandValidator();
+                // ValidationResult result = validator.Validate(command);
+                // if(!result.IsValid)
+                // {
+                //     foreach (var item in result.Errors)
+                //         Console.WriteLine($"Özellik: {item.PropertyName}, Hata Mesajı: {item.ErrorMessage}");
+                // }
+                // else
+                //     command.Handle();
+                validator.ValidateAndThrow(command);
+                    
                 command.Handle();
             }
             catch(Exception ex)
@@ -102,6 +117,10 @@ namespace WebApi.Controllers
             try
             {
                 command.BookId = id;
+
+                DeleteBookCommandValidator validator = new DeleteBookCommandValidator();
+                validator.ValidateAndThrow(command);
+
                 command.Handle();
                 return Ok();
             }
