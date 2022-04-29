@@ -47,6 +47,9 @@ namespace WebApi.Controllers
             query.Id = id;
             try
             {
+                GetBookByIdQueryValidator validator = new GetBookByIdQueryValidator();
+                validator.ValidateAndThrow(query);
+
                 var result = query.Handle();
                 return Ok(result);
             }
@@ -101,6 +104,11 @@ namespace WebApi.Controllers
             {
                 command.Model = updatedBook;
                 command.Id = id;
+
+                UpdateBookCommandValidator validator = new UpdateBookCommandValidator();
+
+                validator.ValidateAndThrow(command);
+
                 command.Handle();
                 return Ok();
             }

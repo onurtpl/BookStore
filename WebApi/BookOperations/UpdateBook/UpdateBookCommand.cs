@@ -25,14 +25,11 @@ namespace WebApi.BookOperations.UpdateBook
             if(book is null)
                 throw new InvalidOperationException("Kitap bulunamadı");
             
-            book =  _mapper.Map<UpdateBookModel, Book>(Model);
-            book.Id = Id;
-
-            // book.Title = Model.Title != default ? Model.Title : book.Title;
-            // book.GenreId = Model.GenreId != default ? Model.GenreId : book.GenreId;
-            // book.PageCount = Model.PageCount != default ? Model.PageCount : book.PageCount;
-            // book.PublishDate = Model.PublishedDate != default ? Model.PublishedDate : book.PublishDate;
-            _dbContext.Books.Update(book);
+            book.Title = Model.Title != default ? Model.Title : book.Title;
+            book.GenreId = Model.GenreId != default ? Model.GenreId : book.GenreId;
+            book.PageCount = Model.PageCount != default ? Model.PageCount : book.PageCount;
+            book.PublishDate = Model.PublishedDate != default ? Model.PublishedDate : book.PublishDate;
+            
             _dbContext.SaveChanges();
         }
     }
