@@ -21,15 +21,14 @@ namespace WebApi.BookOperations.GetBookById
         public BookDetailViewModel Handle()
         {
             Book book = _dbContext.Books.FirstOrDefault(x => x.Id == Id);
-            if(book is null)
+            if (book is null)
                 throw new InvalidOperationException("Kayıtlı kitap bulunamadı");
-                
             var bookViewModel = _mapper.Map<BookDetailViewModel>(book);
             return bookViewModel;
         }
     }
 
-    public class BookDetailViewModel 
+    public class BookDetailViewModel
     {
         public string Title { get; set; }
         public int PageCount { get; set; }
@@ -37,5 +36,5 @@ namespace WebApi.BookOperations.GetBookById
         public string Genre { get; set; }
     }
 
-    
+
 }

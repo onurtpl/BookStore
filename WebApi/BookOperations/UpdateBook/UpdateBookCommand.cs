@@ -9,7 +9,7 @@ namespace WebApi.BookOperations.UpdateBook
     public class UpdateBookCommand
     {
         public int Id { get; set; }
-        public UpdateBookModel Model { get; set;}
+        public UpdateBookModel Model { get; set; }
         private readonly BookStoreDbContext _dbContext;
         private readonly IMapper _mapper;
 
@@ -22,14 +22,14 @@ namespace WebApi.BookOperations.UpdateBook
         public void Handle()
         {
             var book = _dbContext.Books.FirstOrDefault(x => x.Id == Id);
-            if(book is null)
+            if (book is null)
                 throw new InvalidOperationException("Kitap bulunamadı");
-            
+
             book.Title = Model.Title != default ? Model.Title : book.Title;
             book.GenreId = Model.GenreId != default ? Model.GenreId : book.GenreId;
             book.PageCount = Model.PageCount != default ? Model.PageCount : book.PageCount;
             book.PublishDate = Model.PublishedDate != default ? Model.PublishedDate : book.PublishDate;
-            
+
             _dbContext.SaveChanges();
         }
     }

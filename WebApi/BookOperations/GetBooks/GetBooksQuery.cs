@@ -23,14 +23,14 @@ namespace WebApi.BookOperations.GetBooks
             var bookList = _context.Books.OrderBy(x => x.Id).ToList<Book>();
             List<BookViewModel> vm = new List<BookViewModel>();
             foreach (var book in bookList)
-            {   
-                vm.Add( _mapper.Map<BookViewModel>(book));
+            {
+                vm.Add(_mapper.Map<BookViewModel>(book));
             }
             return vm;
         }
     }
 
-    public class BookViewModel 
+    public class BookViewModel
     {
         public string Title { get; set; }
         public int PageCount { get; set; }
