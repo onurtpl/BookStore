@@ -21,7 +21,7 @@ namespace WebApi.Application.BookOperations.Queries.GetBookById
 
         public BookDetailViewModel Handle()
         {
-            Book book = _dbContext.Books.Include(x => x.Genre).FirstOrDefault(x => x.Id == Id);
+            Book book = _dbContext.Books.Include(x => x.Genre).Include(x => x.Author).FirstOrDefault(x => x.Id == Id);
             if (book is null)
                 throw new InvalidOperationException("Kayıtlı kitap bulunamadı");
             var bookViewModel = _mapper.Map<BookDetailViewModel>(book);
@@ -35,6 +35,7 @@ namespace WebApi.Application.BookOperations.Queries.GetBookById
         public int PageCount { get; set; }
         public string PublishDate { get; set; }
         public string Genre { get; set; }
+        public string Author { get; set; }
     }
 
 
