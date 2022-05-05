@@ -17,11 +17,11 @@ namespace WebApi.Common
         {
             // GetBooks
             CreateMap<Book, BookViewModel>()
-                .ForMember(des => des.Genre, options => options.MapFrom(src => ((GenreEnum)src.GenreId).ToString()))
+                .ForMember(des => des.Genre, options => options.MapFrom(src => src.Genre.Name))
                 .ForMember(des => des.PublishDate, options => options.MapFrom(src => src.PublishDate.Date.ToString("dd/MM/yyyy")));
             // GetBookById
             CreateMap<Book, BookDetailViewModel>()
-                .ForMember(des => des.Genre, opt => opt.MapFrom(src => ((GenreEnum)src.GenreId).ToString()))
+                .ForMember(des => des.Genre, opt => opt.MapFrom(src => src.Genre.Name))
                 .ForMember(des => des.PublishDate, opt => opt.MapFrom(src => src.PublishDate.Date.ToString("dd/MM/yyyy")));
             // CreateBook
             CreateMap<CreateBookModel, Book>();
