@@ -66,27 +66,20 @@ namespace WebApi.Controllers
         {
             CreateBookCommand command = new CreateBookCommand(_context, _mapper);
 
-            try
-            {
-                command.Model = newBook;
+            command.Model = newBook;
 
-                CreateBookCommandValidator validator = new CreateBookCommandValidator();
-                // ValidationResult result = validator.Validate(command);
-                // if(!result.IsValid)
-                // {
-                //     foreach (var item in result.Errors)
-                //         Console.WriteLine($"Özellik: {item.PropertyName}, Hata Mesajı: {item.ErrorMessage}");
-                // }
-                // else
-                //     command.Handle();
-                validator.ValidateAndThrow(command);
+            CreateBookCommandValidator validator = new CreateBookCommandValidator();
+            // ValidationResult result = validator.Validate(command);
+            // if(!result.IsValid)
+            // {
+            //     foreach (var item in result.Errors)
+            //         Console.WriteLine($"Özellik: {item.PropertyName}, Hata Mesajı: {item.ErrorMessage}");
+            // }
+            // else
+            //     command.Handle();
+            validator.ValidateAndThrow(command);
 
-                command.Handle();
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            command.Handle();
             return Ok();
         }
 

@@ -3,6 +3,8 @@ using WebApi.Application.BookOperations.Commands.CreateBook;
 using WebApi.Application.BookOperations.Commands.UpdateBook;
 using WebApi.Application.BookOperations.Queries.GetBookById;
 using WebApi.Application.BookOperations.Queries.GetBooks;
+using WebApi.Application.GenreOperations.Commands.CreateGenre;
+using WebApi.Application.GenreOperations.Commands.UpdateGenre;
 using WebApi.Application.GenreOperations.Queries.GetGenreDetail;
 using WebApi.Application.GenreOperations.Queries.GetGenres;
 using WebApi.Entities;
@@ -31,6 +33,10 @@ namespace WebApi.Common
             CreateMap<Genre, GenreViewModel>();
             // GetGenreDetail
             CreateMap<Genre, GenreDetailViewModel>();
+            // CreateGenre
+            CreateMap<CreateGenreModel, Genre>();
+            // UpdateGenre
+            CreateMap<UpdateGenreViewModel, Genre>();
                 
         }
     }
