@@ -1,12 +1,12 @@
 using System.Linq;
 using System.Collections.Generic;
 using WebApi.DbOperationOptions;
-using WebApi.Models;
+using WebApi.Entities;
 using System;
 using WebApi.Common;
 using AutoMapper;
 
-namespace WebApi.BookOperations.GetBooks
+namespace WebApi.Application.BookOperations.Queries.GetBooks
 {
     public class GetBooksQuery
     {

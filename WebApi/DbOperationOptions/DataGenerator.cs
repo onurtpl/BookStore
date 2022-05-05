@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using WebApi.Models;
+using WebApi.Entities;
 
 namespace WebApi.DbOperationOptions
 {
@@ -14,6 +14,19 @@ namespace WebApi.DbOperationOptions
             {
                 if (context.Books.Any())
                     return;
+
+                context.Genres.AddRange(
+                    new Genre {
+                        Name = "Personal Growth",
+                    },
+                    new Genre {
+                        Name = "Science Finction",
+                    },
+                    new Genre {
+                        Name = "Romance",
+                    }
+                );
+
 
                 context.AddRange(
                     new Book

@@ -3,9 +3,9 @@ using System.Linq;
 using AutoMapper;
 using WebApi.Common;
 using WebApi.DbOperationOptions;
-using WebApi.Models;
+using WebApi.Entities;
 
-namespace WebApi.BookOperations.GetBookById
+namespace WebApi.Application.BookOperations.Queries.GetBookById
 {
     public class GetBookByIdQuery
     {

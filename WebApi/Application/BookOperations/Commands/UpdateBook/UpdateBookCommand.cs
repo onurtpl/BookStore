@@ -1,10 +1,10 @@
 using WebApi.DbOperationOptions;
 using System.Linq;
 using System;
-using WebApi.Models;
+using WebApi.Entities;
 using AutoMapper;
 
-namespace WebApi.BookOperations.UpdateBook
+namespace WebApi.Application.BookOperations.Commands.UpdateBook
 {
     public class UpdateBookCommand
     {
