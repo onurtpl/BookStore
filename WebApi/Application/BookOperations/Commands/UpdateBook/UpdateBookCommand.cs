@@ -10,10 +10,10 @@ namespace WebApi.Application.BookOperations.Commands.UpdateBook
     {
         public int Id { get; set; }
         public UpdateBookModel Model { get; set; }
-        private readonly BookStoreDbContext _dbContext;
+        private readonly IBookStoreDbContext _dbContext;
         private readonly IMapper _mapper;
 
-        public UpdateBookCommand(BookStoreDbContext dbContext, IMapper mapper = null)
+        public UpdateBookCommand(IBookStoreDbContext dbContext, IMapper mapper = null)
         {
             _dbContext = dbContext;
             _mapper = mapper;
