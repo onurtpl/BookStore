@@ -1,4 +1,9 @@
 using AutoMapper;
+using WebApi.Application.AuthorOperations.Commands.CreateAuthor;
+using WebApi.Application.AuthorOperations.Commands.UpdateAuthor;
+using WebApi.Application.AuthorOperations.Queries;
+using WebApi.Application.AuthorOperations.Queries.GetAuthorDetail;
+using WebApi.Application.AuthorOperations.Queries.GetAuthors;
 using WebApi.Application.BookOperations.Commands.CreateBook;
 using WebApi.Application.BookOperations.Commands.UpdateBook;
 using WebApi.Application.BookOperations.Queries.GetBookById;
@@ -48,7 +53,16 @@ namespace WebApi.Common
             ///
             ///     Author
             ///
-                
+            // GetAuthors
+            CreateMap<Author, AuthorViewModel>()
+                .ForMember(des => des.BirthDate, options => options.MapFrom(src => src.BirthDate.Date.ToString("dd/MM/yyyy")));
+            // GetAuthorDetail
+            CreateMap<Author, AuthorDetailViewModel>()
+                .ForMember(des => des.BirthDate, options => options.MapFrom(src => src.BirthDate.Date.ToString("dd/MM/yyyy")));
+            // Create Author
+            CreateMap<CreateAuthorViewModel, Author>();
+            // Update Author
+            CreateMap<UpdateAuthorViewModel, Author>();
         }
     }
 }
