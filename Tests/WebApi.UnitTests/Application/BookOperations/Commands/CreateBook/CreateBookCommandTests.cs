@@ -7,13 +7,13 @@ using WebApi.Entities;
 using WebApi.UnitTests.TestsSetup;
 using Xunit;
 
-namespace WebApi.UnitTests.Application.BookOperations.Commands.CreateCommand
+namespace WebApi.UnitTests.Application.BookOperations.Commands.CreateBook
 {
     public class CreateBookCommandTests : IClassFixture<CommonTestFixture>
     {
         private readonly BookStoreDbContext _context;
         private readonly IMapper _mapper;
-        
+
         public CreateBookCommandTests(CommonTestFixture testFixture)
         {
             _context = testFixture.Context;
@@ -24,7 +24,8 @@ namespace WebApi.UnitTests.Application.BookOperations.Commands.CreateCommand
         public void WhenAlreadyExistBookTitleIsGiven_InvalidOperationException_ShoulBeReturn()
         {
             // arrange (hazırlık)
-            var book = new Book {
+            var book = new Book
+            {
                 Title = "Test_WhenAlreadyExistBookTitleIsGiven_InvalidOperationException_ShoulBeReturn",
                 PageCount = 100,
                 PublishDate = new System.DateTime(1990, 01, 10),
@@ -35,7 +36,8 @@ namespace WebApi.UnitTests.Application.BookOperations.Commands.CreateCommand
             _context.SaveChanges();
 
             CreateBookCommand command = new CreateBookCommand(_context, _mapper);
-            command.Model = new CreateBookModel() {
+            command.Model = new CreateBookModel()
+            {
                 Title = book.Title
             };
 
@@ -48,6 +50,6 @@ namespace WebApi.UnitTests.Application.BookOperations.Commands.CreateCommand
                 .Invoking(() => command.Handle())
                 .Should().Throw<InvalidOperationException>().And.Message.Should().Be("Kitap zaten mevcut");
         }
-        
+
     }
 }
