@@ -25,8 +25,12 @@ namespace WebApi.Application.BookOperations.Commands.UpdateBook
             if (book is null)
                 throw new InvalidOperationException("Kitap bulunamadı");
 
+            if (_dbContext.Books.Any(b => b.Title.ToLower() == Model.Title.ToLower() && b.Id != Id))
+                throw new InvalidOperationException("Aynı başlığa sahip bir kitap zaten mevcut");
+
             book.Title = Model.Title != default ? Model.Title : book.Title;
             book.GenreId = Model.GenreId != default ? Model.GenreId : book.GenreId;
+            book.AuthorId = Model.AuthorId != default ? Model.AuthorId : book.AuthorId;
             book.PageCount = Model.PageCount != default ? Model.PageCount : book.PageCount;
             book.PublishDate = Model.PublishedDate != default ? Model.PublishedDate : book.PublishDate;
 
@@ -39,6 +43,7 @@ namespace WebApi.Application.BookOperations.Commands.UpdateBook
     {
         public string Title { get; set; }
         public int GenreId { get; set; }
+        public int AuthorId { get; set; }
         public int PageCount { get; set; }
         public DateTime PublishedDate { get; set; }
     }

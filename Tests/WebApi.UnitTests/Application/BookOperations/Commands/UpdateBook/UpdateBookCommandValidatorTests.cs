@@ -4,10 +4,12 @@ using WebApi.Application.BookOperations.Commands.CreateBook;
 using WebApi.UnitTests.TestsSetup;
 using Xunit;
 
-namespace WebApi.UnitTests.Application.BookOperations.Commands.CreateBook
+namespace WebApi.UnitTests.Application.BookOperations.Commands.UpdateBook
 {
-    public class CreateBookCommandValidatorTests : IClassFixture<CommonTestFixture>
+    public class UpdateteBookCommandValidatorTests : IClassFixture<CommonTestFixture>
     {
+
+        /*
         [Theory]
         [InlineData("Lord of the Rings", 0, 0)]
         [InlineData("Lord of the Rings", 0, 1)]
@@ -79,6 +81,8 @@ namespace WebApi.UnitTests.Application.BookOperations.Commands.CreateBook
             // assert
             result.Errors.Count.Should().BeLessThanOrEqualTo(0);
         }
+
+        */
 
     }
 }
