@@ -22,18 +22,13 @@ namespace WebApi.UnitTests.Application.BookOperations.Queries.GetBookDetail
         [Fact]
         public void WhenInvalidIdGiven_InvalidOperationException_ShouldBeReturn()
         {
-            // arrange
+            //arrange
+            int bookId = 500;
             GetBookByIdQuery query = new GetBookByIdQuery(_context, _mapper);
-            query.Id = 10;
+            query.Id = bookId;
 
-            // act & assert
-            FluentActions.Invoking(() => query.Handle())
-                    .Should()
-                    .Throw<InvalidOperationException>()
-                    .And
-                    .Message
-                    .Should()
-                    .Be("Kayıtlı kitap bulunamadı");
+            //act&assert
+            FluentActions.Invoking(() => query.Handle()).Should().Throw<InvalidOperationException>().And.Message.Should().Be("Kayıtlı kitap bulunamadı");
         }
     }
 }

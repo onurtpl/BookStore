@@ -29,11 +29,9 @@ namespace WebApi.Application.GenreOperations.Queries.GetGenres
             var vm = _mapper.Map<List<GenreViewModel>>(entities);
             return vm;
         }
-
-        
     }
 
-    public class GenreViewModel 
+    public class GenreViewModel
     {
         public int Id { get; set; }
         public string Name { get; set; }

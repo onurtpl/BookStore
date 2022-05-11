@@ -42,8 +42,6 @@ namespace WebApi.Controllers
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
-            // var book = _context.Books.FirstOrDefault(x => x.Id == id);
-            // return book;
             GetBookByIdQuery query = new GetBookByIdQuery(_context, _mapper);
             query.Id = id;
             GetBookByIdQueryValidator validator = new GetBookByIdQueryValidator();
@@ -53,14 +51,6 @@ namespace WebApi.Controllers
             return Ok(result);
 
         }
-
-        // [HttpGet]
-        // public Book Get([FromQuery]string id)
-        // {
-        //     var book = BookList.FirstOrDefault(x => x.Id == int.Parse(id));
-        //     return book;
-        // }
-
         [HttpPost]
         public IActionResult AddBook([FromBody] CreateBookModel newBook)
         {
@@ -69,14 +59,6 @@ namespace WebApi.Controllers
             command.Model = newBook;
 
             CreateBookCommandValidator validator = new CreateBookCommandValidator();
-            // ValidationResult result = validator.Validate(command);
-            // if(!result.IsValid)
-            // {
-            //     foreach (var item in result.Errors)
-            //         Console.WriteLine($"Özellik: {item.PropertyName}, Hata Mesajı: {item.ErrorMessage}");
-            // }
-            // else
-            //     command.Handle();
             validator.ValidateAndThrow(command);
 
             command.Handle();

@@ -6,7 +6,7 @@ using WebApi.Entities;
 
 namespace WebApi.Application.GenreOperations.Queries.GetGenreDetail
 {
-    
+
     public class GetGenreDetailQuery
     {
         public int GenreId { get; set; }
@@ -22,9 +22,9 @@ namespace WebApi.Application.GenreOperations.Queries.GetGenreDetail
         public GenreDetailViewModel Handle()
         {
             Genre entity = _context.Genres.FirstOrDefault(x => x.Id == GenreId);
-            if(entity is null)
+            if (entity is null)
                 throw new InvalidOperationException("Kayıtlı Genre bulunamadı");
-            
+
             var genreDetailViewModel = _mapper.Map<GenreDetailViewModel>(entity);
             return genreDetailViewModel;
         }

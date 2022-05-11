@@ -22,8 +22,10 @@ namespace WebApi.Application.GenreOperations.Commands.UpdateGenre
         public void Handle()
         {
             var entity = _dbContext.Genres.SingleOrDefault(x => x.Id == GenreId);
-            if(entity is null) 
+            if (entity is null)
                 throw new InvalidOperationException("Kayıtlı Genre bulunamadı");
+            if (_dbContext.Genres.Any(x => x.Name.ToLower() == Model.Name.ToLower() && x.Id != GenreId))
+                throw new InvalidOperationException("Aynı Name değerine sahip genre zaten mevcut");
             entity.Name = Model.Name != default ? Model.Name : entity.Name;
 
             _dbContext.SaveChanges();

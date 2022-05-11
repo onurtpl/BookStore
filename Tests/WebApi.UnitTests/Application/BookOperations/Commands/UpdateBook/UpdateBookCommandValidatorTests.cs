@@ -1,6 +1,7 @@
 using System;
 using FluentAssertions;
 using WebApi.Application.BookOperations.Commands.CreateBook;
+using WebApi.Application.BookOperations.Commands.UpdateBook;
 using WebApi.UnitTests.TestsSetup;
 using Xunit;
 
@@ -9,80 +10,64 @@ namespace WebApi.UnitTests.Application.BookOperations.Commands.UpdateBook
     public class UpdateteBookCommandValidatorTests : IClassFixture<CommonTestFixture>
     {
 
-        /*
         [Theory]
-        [InlineData("Lord of the Rings", 0, 0)]
-        [InlineData("Lord of the Rings", 0, 1)]
-        [InlineData("", 0, 0)]
-        [InlineData("  ", 100, 1)]
-        [InlineData("", 0, 1)]
-        [InlineData("Lor", 1, 1)]
-        [InlineData("Lor", 0, 0)]
-        [InlineData("Lor", 0, 1)]
-        public void WhenInvalidInputsAreGiven_Validator_ShouldBeReturnErrors(string title, int pageCount, int genreId)
+        [InlineData("", 0, 1, 1, 1)]
+        [InlineData(" ", -5, 1, 1, 1)]
+        [InlineData("", 1, 1, 1, 1)]
+        [InlineData("Lor", 1,  1, 1, 1)]
+        [InlineData("Lord", 10, 0, 1, 1)]
+        [InlineData("Demo 123", 10, -5, 1, 1)]
+        [InlineData("Demo 1233", 5, 1, 0, 1)]
+        [InlineData("Demo", 5, 1, -3, 1)]
+        [InlineData("Lord Of The Rings", 2, 1, 1, 0)]
+        [InlineData( "Lord Of The Rings", 1, 1, 1, -10)]
+        public void WhenInvalidInputsAreGiven_Validator_ShouldBeReturnErrors(string title, int pageCount, int genreId, int authorId, int bookId)
         {
-            // arrange
-            CreateBookCommand command = new CreateBookCommand(null, null);
-            command.Model = new CreateBookModel {
-                Title = title,
-                PageCount = pageCount,
-                PublishedDate = DateTime.Now.AddYears(-1),
-                GenreId = genreId
-            };
-            // act
-            CreateBookCommandValidator validator = new CreateBookCommandValidator();
+            //arrange
+            UpdateBookCommand command = new UpdateBookCommand(null);
+            command.Id = bookId;
+            command.Model = new UpdateBookModel { Title = title, PageCount = pageCount, PublishedDate = System.DateTime.Now.AddMonths(3), GenreId = genreId, AuthorId = authorId };
+
+            //act
+            UpdateBookCommandValidator validator = new UpdateBookCommandValidator();
             var result = validator.Validate(command);
 
-            // assert
+            //assert
             result.Errors.Count.Should().BeGreaterThan(0);
         }
 
         [Fact]
         public void WhenDateTimeEqualNowIsGiven_Validator_ShouldBeReturnError()
         {
-            CreateBookCommand command = new CreateBookCommand(null, null);
-            command.Model = new CreateBookModel {
-                Title = "title",
-                PageCount = 100,
-                PublishedDate = DateTime.Now.Date,
-                GenreId = 1
-            };
+            //arrange
+            UpdateBookCommand command = new UpdateBookCommand(null);
+            command.Id = 1;
+            command.Model = new UpdateBookModel { Title = "Demo", PageCount = 100, PublishedDate = System.DateTime.Now.Date, GenreId = 1, AuthorId = 1 };
 
-            CreateBookCommandValidator validator = new CreateBookCommandValidator();
+            //act
+            UpdateBookCommandValidator validator = new UpdateBookCommandValidator();
             var result = validator.Validate(command);
 
+            //assert
             result.Errors.Count.Should().BeGreaterThan(0);
         }
 
-        [Theory]
-        [InlineData("Lord of the Rings", 1, 1)]
-        [InlineData("Lord of the Rings", 2, 1)]
-        [InlineData("Denyo", 100, 1)]
-        [InlineData("Lord", 100, 1)]
-        [InlineData("Deneme", 100, 2)]
-        [InlineData("Test 123", 1, 1)]
-        [InlineData("Film", 1000, 1)]
-        [InlineData("Eleman", 1, 15)]
-        [InlineData("Teory", 10000, 1)]
-        public void WhenValidInputsAreGiven_Validator_ShouldNotBeReturnErrors(string title, int pageCount, int genreId)
+        [Fact]
+        public void WhenValidInputsAreGiven_Validator_ShouldNotBeReturnError()
         {
-            // arrange
-            CreateBookCommand command = new CreateBookCommand(null, null);
-            command.Model = new CreateBookModel {
-                Title = title,
-                PageCount = pageCount,
-                PublishedDate = DateTime.Now.AddYears(-1),
-                GenreId = genreId
-            };
-            // act
-            CreateBookCommandValidator validator = new CreateBookCommandValidator();
+            //arrange
+            UpdateBookCommand command = new UpdateBookCommand(null);
+            command.Id = 1;
+            command.Model = new UpdateBookModel { Title = "Demo", PageCount = 100, PublishedDate = System.DateTime.Now.Date.AddYears(-2), GenreId = 1, AuthorId = 1 };
+
+            //act
+            UpdateBookCommandValidator validator = new UpdateBookCommandValidator();
             var result = validator.Validate(command);
 
-            // assert
-            result.Errors.Count.Should().BeLessThanOrEqualTo(0);
+            //assert
+            result.Errors.Count.Should().Be(0);
         }
 
-        */
 
     }
 }
