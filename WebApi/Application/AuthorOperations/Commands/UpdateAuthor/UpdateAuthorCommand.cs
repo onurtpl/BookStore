@@ -24,6 +24,8 @@ namespace WebApi.Application.AuthorOperations.Commands.UpdateAuthor
             var entity = _context.Authors.FirstOrDefault(x => x.Id == AuthorId);
             if(entity is null)
                 throw new InvalidOperationException("Kayıt bulunamadı");
+            if (_context.Authors.Any(x => x.Name.ToLower() == Model.Name.ToLower() && x.Surname == Model.Surname  && x.Id != AuthorId))
+                throw new InvalidOperationException("Aynı Name ve Surname değerine sahip author zaten mevcut");
             entity.BirthDate = Model.BirthDate != default ? Model.BirthDate : entity.BirthDate;
             entity.Name = Model.Name != default ? Model.Name : entity.Name;
             entity.Surname = Model.Surname != default ? Model.Surname : entity.Surname;
