@@ -12,6 +12,7 @@ using WebApi.Application.GenreOperations.Commands.CreateGenre;
 using WebApi.Application.GenreOperations.Commands.UpdateGenre;
 using WebApi.Application.GenreOperations.Queries.GetGenreDetail;
 using WebApi.Application.GenreOperations.Queries.GetGenres;
+using WebApi.Application.UserOperations.Commands.CreateUser;
 using WebApi.Entities;
 
 namespace WebApi.Common
@@ -63,6 +64,12 @@ namespace WebApi.Common
             CreateMap<CreateAuthorViewModel, Author>();
             // Update Author
             CreateMap<UpdateAuthorViewModel, Author>();
+
+            ///
+            /// User
+            ///
+            /// Create User
+            CreateMap<CreateUserModel, User>();
         }
     }
 }

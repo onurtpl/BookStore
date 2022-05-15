@@ -13,9 +13,11 @@ using WebApi.DbOperationOptions;
 using FluentValidation.Results;
 using WebApi.Entities;
 using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApi.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]s")]
     public class BookController : ControllerBase
